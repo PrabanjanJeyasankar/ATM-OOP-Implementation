@@ -36,33 +36,40 @@ class StateBankOfIndia extends ATM{
                 case 1 -> {
                     System.out.println("Enter the amount to be deposited in Rs.");
                     inputAmount = Integer.parseInt(scanner.nextLine());
-                    if(inputAmount <= 0){
-                        throw new InvalidAmountException("Amount must be greater than 0.");
+                    if(isValidAmount(inputAmount)){
+                        depositAmount(inputAmount);
                     }
-                    depositAmount(inputAmount);
                 }
+
                 case 2 -> {
                     System.out.println("Enter the amount to be withdrawn in Rs.");
                     inputAmount = Integer.parseInt(scanner.nextLine());
-                    if(inputAmount <= 0){
-                        throw new InvalidAmountException("Amount must be greater than 0.");
+                    if(isValidAmount(inputAmount)){
+                        if(getAccountBalance() < inputAmount){
+                            throw new InsufficientBalanceException("Insufficient account balance.");
+                        }
+                        withDrawAmount(inputAmount);
                     }
-                    if(getAccountBalance() < inputAmount){
-                        throw new InsufficientBalanceException("Insufficient account balance.");
-                    }
-                    withDrawAmount(inputAmount);
                 }
                 case 3 -> checkBalance();
+
                 case 4 -> {
                     System.out.println("Thank you, Have a nice day...");
                     exit(0);
                 }
+
                 default -> {
                     System.out.println("________________________________");
                     System.out.println("Invalid option, Please enter a valid option.");
                 }
             }
         }while(true);
+    }
+    private boolean isValidAmount(int inputAmount) throws InvalidAmountException{
+        if(inputAmount > 0){
+            return true;
+        }
+        throw new InvalidAmountException("Amount must be greater than 0.");
     }
     private void checkBalance() {
         System.out.println("________________________________");
