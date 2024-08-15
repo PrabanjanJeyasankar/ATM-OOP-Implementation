@@ -17,27 +17,8 @@ class ATM{
 }
 
 class StateBankOfIndia extends ATM{
-    void checkBalance() {
-        System.out.println("________________________________");
-        System.out.println("Your balance is : " + getAccountBalance());
-    }
-
-    void withDrawAmount(int inputAmount) {
-        deductMoney(inputAmount);
-        checkBalance();
-    }
-
-    void depositAmount(int inputAmount) {
-        addMoney(inputAmount);
-        checkBalance();
-    }
-}
-public class Main {
-    public static void main(String[] args) {
+    public void initialize(){
         Scanner scanner = new Scanner(System.in);
-
-        StateBankOfIndia poonamalleATM = new StateBankOfIndia();
-
         int userChoice, inputAmount;
 
         do{
@@ -55,14 +36,14 @@ public class Main {
                 case 1 -> {
                     System.out.println("Enter the amount to be deposited in Rs.");
                     inputAmount = Integer.parseInt(scanner.nextLine());
-                    poonamalleATM.depositAmount(inputAmount);
+                    depositAmount(inputAmount);
                 }
                 case 2 -> {
                     System.out.println("Enter the amount to be withdrawn in Rs.");
                     inputAmount = Integer.parseInt(scanner.nextLine());
-                    poonamalleATM.withDrawAmount(inputAmount);
+                    withDrawAmount(inputAmount);
                 }
-                case 3 -> poonamalleATM.checkBalance();
+                case 3 -> checkBalance();
                 case 4 -> exit(0);
                 default -> {
                     System.out.println("________________________________");
@@ -70,6 +51,26 @@ public class Main {
                 }
             }
         }while(true);
+    }
+    private void checkBalance() {
+        System.out.println("________________________________");
+        System.out.println("Your balance is : " + getAccountBalance());
+    }
+
+    private void withDrawAmount(int inputAmount) {
+        deductMoney(inputAmount);
+        checkBalance();
+    }
+
+    private void depositAmount(int inputAmount) {
+        addMoney(inputAmount);
+        checkBalance();
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        StateBankOfIndia poonamalleeATM = new StateBankOfIndia();
+        poonamalleeATM.initialize();
     }
 
 
