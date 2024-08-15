@@ -1,13 +1,43 @@
 import java.util.Scanner;
 
 import static java.lang.System.exit;
-import static java.lang.System.in;
 
+class ATM{
+    private int accountBalance;
+
+    public int getAccountBalance(){
+        return accountBalance;
+    }
+    public void addMoney(int amountToBeDeposited){
+        accountBalance += amountToBeDeposited;
+    }
+    public void deductMoney(int amountToBeWithDrawn){
+        accountBalance -= amountToBeWithDrawn;
+    }
+}
+
+class StateBankOfIndia extends ATM{
+    void checkBalance() {
+        System.out.println("________________________________");
+        System.out.println("Your balance is : " + getAccountBalance());
+    }
+
+    void withDrawAmount(int inputAmount) {
+        deductMoney(inputAmount);
+        checkBalance();
+    }
+
+    void depositAmount(int inputAmount) {
+        addMoney(inputAmount);
+        checkBalance();
+    }
+}
 public class Main {
-    static int accountBalance;
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
+        StateBankOfIndia poonamalleATM = new StateBankOfIndia();
+
         int userChoice, inputAmount;
 
         do{
@@ -21,47 +51,26 @@ public class Main {
 
             userChoice = Integer.parseInt(scanner.nextLine());
 
-            switch (userChoice){
-                case 1:
+            switch (userChoice) {
+                case 1 -> {
                     System.out.println("Enter the amount to be deposited in Rs.");
-
                     inputAmount = Integer.parseInt(scanner.nextLine());
-                    depositAmout(inputAmount);
-                    break;
-
-                case 2:
+                    poonamalleATM.depositAmount(inputAmount);
+                }
+                case 2 -> {
                     System.out.println("Enter the amount to be withdrawn in Rs.");
-
                     inputAmount = Integer.parseInt(scanner.nextLine());
-                    withDrawAmount(inputAmount);
-                    break;
-
-                case 3:
-                    checkBalance();
-                    break;
-
-                case 4:
-                    exit(0);
-
-                default:
+                    poonamalleATM.withDrawAmount(inputAmount);
+                }
+                case 3 -> poonamalleATM.checkBalance();
+                case 4 -> exit(0);
+                default -> {
                     System.out.println("________________________________");
                     System.out.println("Invalid option, Please enter a valid option.");
+                }
             }
         }while(true);
     }
 
-    static void checkBalance() {
-        System.out.println("________________________________");
-        System.out.println("Your balance is : " + accountBalance);
-    }
 
-    static void withDrawAmount(int inputAmount) {
-        accountBalance -= inputAmount;
-        checkBalance();
-    }
-
-    static void depositAmout(int inputAmount) {
-        accountBalance += inputAmount;
-        checkBalance();
-    }
 }
